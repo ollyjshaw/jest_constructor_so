@@ -1,5 +1,32 @@
 {
+  "name": "countdown",
+  "description": "given a set of letters it will return the closest matched word",
+  "repository": "gridsmartercities/es6_countdown.git",
+  "license": "BSD-3-Clause",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint 'handler.js' './src/**/*.js' './test/**/*.js'"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "handler.js",
+      "src/**/*.{js,jsx}"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 95,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
+      }
+    }
+  },
   "dependencies": {
     "aws-sdk": "2.149.0"
+  },
+  "devDependencies": {
+    "jest": "^21.2.1",
+    "eslint": "^4.11.0",
+    "swagger-cli": "1.0.1"
   }
 }

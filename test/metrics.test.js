@@ -1,23 +1,17 @@
-const AWS = jest.mock("aws-sdk")
+const AWS = require("aws-sdk")
 
-class FakeMetrics {
-  constructor() {
-    this.calls = 0
-  }
-  putMetricData(foo,callback) {
-    callback(null, "yay!")
-    this.calls ++
-  }
-}
+const fakePutMetricData = jest.fn()
+const FakeCloudWatch = jest.fn(() => ({
+    putMetricData: fakePutMetricData
+}))
 
-const fake = new FakeMetrics()
-AWS.CloudFormation = jest.fn( (props) => fake)
+AWS.CloudWatch = FakeCloudWatch;
 
-const putOurMetric = require("../src/metrics").putOurMetric
+const myMetrics = require("../src/metrics").myMetrics
 
 test("real metrics does something", done => {
-  putOurMetric("foo", "bar", 42)
-  expect(fake.calls).toEqual(1)
+  myMetrics("foo", "bar", 42)
+  expect(fakePutMetricData).toHaveBeenCalledTimes(1);
   done()
 })
 
